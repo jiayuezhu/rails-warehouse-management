@@ -1,6 +1,6 @@
 # Files in the config/locales directory are used for internationalization
 # and are automatically loaded by Rails. If you want to use locales other
-# than English, add the necessary files in this directory.
+# than English日, add the necessary files in this directory.
 #
 # To use the locales, use `I18n.t`:
 #
@@ -31,3 +31,10 @@
 
 en:
   hello: "Hello world"
+  date:
+    format:
+      default: "%Y-%m-%d"
+      short: "%b %d"
+      long: "%B %d, %Y"
+    month_names: [~, 01月, 02月, 03月, 04月, 05月, 06月, 07月, 08月, 09月, 10月, 11月, 12月]
+    day_names: [~, 1日, 2日, 3日, 4日, 5日, 6日, 7日, 8日, 9日, 10日, 11日, 12日, 13日, 14日, 15日, 16日, 17日, 18日, 19日, 20日, 21日, 22日, 23日, 24日, 25日, 26日, 27日, 28日, 29日, 30日，31日]

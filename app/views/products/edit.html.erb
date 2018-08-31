@@ -1,0 +1,9 @@
+<%= simple_form_for @product do |f| %>
+  <h1>更新您的商品</h1>
+  <%= f.input :brand, label: "商品品牌" %>
+  <%= f.input :name, label: "商品名字" %>
+  <%= f.input :category, label: "商品种类" %>
+  <%= f.input :color, label: "颜色" %>
+  <%= f.input :purchase_price, label: "进货价" %>
+  <%= f.button :submit, "保存商品" %>
+<% end %>

@@ -1,0 +1,10 @@
+<%= simple_form_for @product do |f| %>
+  <h1>创建新的商品</h1>
+  <%= f.input :brand, label: "商品品牌" %>
+  <%= f.input :name, label: "商品名字" %>
+  <%= f.input :model, label: "型号" %>
+  <%= f.input :category, label: "分类" %>
+  <%= f.input :color, label: "颜色" %>
+  <%= f.input :purchase_price, label: "进货价（￥人民币）", placeholder: '00.00' %>
+  <%= f.button :submit, "保存商品" %>
+<% end %>

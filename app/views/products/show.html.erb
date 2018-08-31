@@ -1,0 +1,5 @@
+  <%= @product.purchase_price %></td>
+  <%= @product.name %></td>
+<%= link_to "删除|", product_path, method: :destroy %>
+<%= link_to "编辑|", edit_product_path %>
+<%= link_to "返回", products_path %>

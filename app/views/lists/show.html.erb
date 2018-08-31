@@ -1,0 +1,11 @@
+<%= @list.id %>
+<%= @list.buyer %>
+<%= @list.seller %>
+<%= link_to "删除", list_path(@list), method: :delete, data: { confirm: '如果删除将无法恢复？' } %>
+<%= link_to "返回", bill_path(@bill) %>
+
+<%= simple_form_for([ @list, @wholesale ]) do |form| %>
+  <%= form.input :price, label: "商品单价" %>
+  <%= form.input :quantity, label: "商品数量" %>
+  <%= form.button :submit %>
+<% end %>

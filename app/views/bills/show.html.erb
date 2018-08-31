@@ -1,0 +1,21 @@
+<% @bill.lists.each do |list| %>
+  <%= link_to list_path(list) do %>
+    <%= list.seller if !list.seller.nil? %>
+    <%= list.buyer if !list.buyer.nil? %>
+  <% end %>
+<% end %>
+<p>Bill Id</p>
+<%= @bill.id %>
+<%= link_to new_bill_retail_path(@bill) do %>
+  <button class="btn btn-primary btn-md">添加零售清单</button>
+<% end %>
+<%= link_to new_bill_wholesale_path(@bill) do %>
+  <button class="btn btn-warning btn-md">添加批发清单</button>
+<% end %>
+<%= link_to new_bill_purchase_path(@bill) do %>
+  <button class="btn btn-info btn-md">添加进货清单</button>
+<% end %>
+<%= link_to "返回", bills_path %>
+<script type="text/javascript">
+
+</script>

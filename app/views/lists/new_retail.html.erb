@@ -1,0 +1,8 @@
+<%= simple_form_for [@bill, List.new(bill_id: @bill.id)] do |f| %>
+  <h1>新的零售清单</h1>
+  <%= f.input :buyer, as: :hidden, input_html: {value: "零售"} %>
+  <%= f.input :notes, label: "顾客备注" %>
+  <%= f.input :created_at, as: :date, :order => [:day, :month, :year], label: "交易日期" %>
+  <%= f.hidden_field :bill_id, input_html: {value: @bill.id} %>
+  <%= f.button :submit, "新建清单" %>
+<% end %>
