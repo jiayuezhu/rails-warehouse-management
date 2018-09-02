@@ -1,4 +1,5 @@
 class WholesalesController < ApplicationController
+    autocomplete :product, :name, :extra_data => [:model]
     def create
     @list = List.find(params[:list_id])
     @wholesale = Wholesale.new(wholesale_params)
@@ -13,6 +14,6 @@ class WholesalesController < ApplicationController
   private
 
   def wholesale_params
-    params.require(:wholesale).permit(:product_id, :quantity, :price)
+    params.require(:wholesale).permit(:id, :product_id, :quantity, :price)
   end
 end

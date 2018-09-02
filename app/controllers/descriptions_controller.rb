@@ -5,7 +5,7 @@ class DescriptionsController < ApplicationController
   end
 
   def create
-    @product = Product.find(params[:product_id])
+    @product = Product.find(params[:id])
     @description = Description.new(description_params)
     @description.product = Product.find(params[:product_id])
     if @description.save
@@ -33,5 +33,8 @@ class DescriptionsController < ApplicationController
     @description = Description.find(params[:id])
     @description.destroy
   end
-
+  private
+  def description_params
+    params.require(:description).permit(:product_id, :detail_id, :parameter)
+  end
 end

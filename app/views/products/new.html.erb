@@ -5,6 +5,8 @@
   <%= f.input :model, label: "型号" %>
   <%= f.input :category, label: "分类" %>
   <%= f.input :color, label: "颜色" %>
+  <%= f.input :storage, label: "当前商品库存（个）",input_html: { min: 1 }, placeholder: '0' %>
   <%= f.input :purchase_price, label: "进货价（￥人民币）", placeholder: '00.00' %>
+  <%= f.input :wholesale_labeled_price, label: "批发定价（￥人民币）", placeholder: '00.00' %>
   <%= f.button :submit, "保存商品" %>
 <% end %>
