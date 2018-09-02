@@ -11,8 +11,8 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :detail, only: [:new, :create, :update, :edit, :destroy]
-
+  resources :details, only: [:new, :create, :index, :destroy]
+  get "products/:id/new_similar", to: "products#new_similar", as: :new_similar_product
   get "bills/:bill_id/lists/new_retail", to: "lists#new_retail", as: :new_bill_retail
   get "bills/:bill_id/lists/new_wholesale", to: "lists#new_wholesale", as: :new_bill_wholesale
   get "bills/:bill_id/lists/new_purchase", to: "lists#new_purchase", as: :new_bill_purchase

@@ -13,11 +13,16 @@ class BillsController < ApplicationController
   end
 
   def create
-    @bill = Bill.new(params[:id])
+    @bill = Bill.new(bill_params)
     if @bill.save
       redirect_to bill_path(@bill)
     else
       render :new
     end
+  end
+
+  private
+  def bill_params
+    params.require(:bill).permit(:created_at)
   end
 end

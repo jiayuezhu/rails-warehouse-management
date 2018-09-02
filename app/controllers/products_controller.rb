@@ -12,18 +12,18 @@
     end
   end
 
-  # def autocomplete
-  #   render json: Product.search(params[:query], {
-  #     fields: ["name", "model", "category", "brand"],
-  #     match: :word_start,
-  #     limit: 10,
-  #     load: false,
-  #     misspellings: {below: 2}
-  #   }).map(&:name)
-  # end
-
   def show
     @product = Product.find(params[:id])
+  end
+
+  def new_similar
+    old_product = Product.find(params[:id])
+    @new_product = Product.new(name: old_product.name,
+                               brand: old_product.brand,
+                               model: old_product.model,
+                               category: old_product.category,
+                               purchase_price: old_product.purchase_price,
+                               wholesale_labeled_price: old_product.wholesale_labeled_price)
   end
 
   def new
@@ -34,7 +34,7 @@
   def create
     @product = Product.new(set_product)
     if @product.save
-      redirect_to products_path
+      redirect_to product_path(@product)
     else
       render :new
     end

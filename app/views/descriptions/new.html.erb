@@ -1,16 +1,8 @@
-<% if @detail.empty? do |d| %>
-
-<% else %>
-  <%= simple_form_for @description do |f| %>
-    <h1>添加新的产品参数</h1>
-    <%= f.input :brand, label: "商品品牌" %>
-    <%= f.input :name, label: "商品名字" %>
-    <%= f.input :model, label: "型号" %>
-    <%= f.input :category, label: "分类" %>
-    <%= f.input :color, label: "颜色" %>
-    <%= f.input :storage, label: "当前商品库存（个）",input_html: { min: 1 }, placeholder: '0' %>
-    <%= f.input :purchase_price, label: "进货价（￥人民币）", placeholder: '00.00' %>
-    <%= f.input :wholesale_labeled_price, label: "批发定价（￥人民币）", placeholder: '00.00' %>
-    <%= f.button :submit, "保存商品" %>
-  <% end %>
+<%= simple_form_for [@product, @description] do |f| %>
+  <h1>添加新的产品参数数据</h1>
+  <%= f.association :detail, prompt: "请选择参数", label: false %>
+  <%= f.input :parameter, placeholder: "请输入数据", label: false %>
+  <%= f.button :submit, "保存数据" %>
 <% end %>
+
+<%= link_to "找不到想要的参数种类？点击添加自定义参数", new_detail_path %>

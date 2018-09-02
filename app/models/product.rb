@@ -4,10 +4,11 @@ class Product < ApplicationRecord
   has_many :lists, through: :wholesales
   has_many :wholesales
   validates :name, presence: true
-  validates :model, presence: true, uniqueness: true
+  validates_uniqueness_of :name, :scope => [:model, :brand, :color]
+  validates :model, presence: true
   validates :brand, presence: true
-  validates :purchase_price, presence: true, uniqueness: true, format: { with: /(\d)+.\d{0,2}/ }
-  validates :storage, presence: true, uniqueness: true, format: { with: /(\d)+/ }
+  validates :purchase_price, presence: true, format: { with: /(\d)+.\d{0,2}/ }
+  validates :storage, presence: true, format: { with: /(\d)+/ }
   validates :wholesale_labeled_price, presence: true, format: { with: /(\d)+.\d{0,2}/ }
   # include PgSearch
   # pg_search_scope :search_by,

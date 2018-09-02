@@ -6,7 +6,7 @@
   <%= link_to product_path(product) do %>
     <p><%= product.name %></p>
     <p><%= product.category %></p>
-    <p><%= product.purchase_price %></p>
+    <p>￥<%= product.purchase_price %></p>
   <% end %>
 <% end %>
 <%= link_to "添加新产品", new_product_path %>

@@ -5,7 +5,7 @@ class DescriptionsController < ApplicationController
   end
 
   def create
-    @product = Product.find(params[:id])
+    @product = Product.find(params[:product_id])
     @description = Description.new(description_params)
     @description.product = Product.find(params[:product_id])
     if @description.save

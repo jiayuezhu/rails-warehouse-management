@@ -1,0 +1,5 @@
+<%= simple_form_for @detail do |f| %>
+  <h1>添加新的产品参数种类</h1>
+  <%= f.input :name, placeholder: "eg. 电池容量", label: "参数种类" %>
+  <%= f.button :submit, "保存" %>
+<% end %>

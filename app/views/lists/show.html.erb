@@ -12,6 +12,6 @@
   <%= form.input :price, label: "商品单价（￥人民币）", placeholder: '00.00' %>
   <%= form.input :quantity, label: "商品数量", input_html: {value: 1} if @list.buyer == "零售" %>
   <%= form.input :quantity, label: "商品数量" if @list.buyer != "零售" %>
-  <%= form.association :product, label: "选择一个产品", prompt: "品牌 - 产品名字 - 产品颜色 - 产品型号", label_method: lambda { |product| "#{product.brand} - #{product.name} - {product.color} - #{product.model}" } %>
+  <%= form.association :product, label: "选择一个产品", prompt: "产品品牌 - 产品名字 - 产品颜色 - 产品型号", label_method: lambda { |product| "#{product.brand} - #{product.name} - #{product.color} - #{product.model}" } %>
   <%= form.button :submit %>
 <% end %>

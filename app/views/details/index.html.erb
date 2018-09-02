@@ -1,0 +1,9 @@
+<% if !Detail.nil? %>
+  <% @details.each do |d| %>
+    <%= d.name %>
+    <%= link_to "删除", detail_path(d), method: :delete, data: {confirm: "您若有产品的参数使用该参数种类，此操作将会删除所有产品对应的参数。"} %>
+  <% end %>
+<% else %>
+  <h1>您目前还没有任何参数种类。</h1>
+  <%= link_to "马上点击添加自定义参数", new_detail_path %>
+<% end %>

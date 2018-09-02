@@ -1,6 +1,13 @@
-  <%= @product.purchase_price %></td>
-  <%= @product.name %></td>
-<%= link_to "删除|", product_path, method: :destroy %>
+<%= @product.purchase_price %>
+<%= @product.name %>
+<%= link_to "删除|", product_path, method: :delete, data: {confirm: "您确定要删除该商品吗？"} %>
 <%= link_to "编辑|", edit_product_path %>
 <%= link_to "返回", products_path %>
+<br>
 <%= link_to "点击添加该商品参数", new_product_description_path(@product) %>
+<br>
+<%= link_to "查看所有产品参数种类", details_path %>
+<br>
+<%= puts @product.id %>
+<%= puts params[:id] %>
+<%= link_to "新建另一个颜色的#{@product.name}", new_similar_product_path %>
