@@ -63,7 +63,7 @@ puts "bills made"
 Bill.all.each do |b|
   a = rand(2..10)
   a.times do
-    List.create(buyer_id: rand(121..140),
+    List.create(buyer_id: rand(65..84),
                 bill_id: b.id)
   end
 end
@@ -88,7 +88,7 @@ puts "details created"
 Product.all.each do |p|
   Description.create(product_id: p.id,
                      parameter: descriptions.sample,
-                     detail_id: rand(9..13))
+                     detail_id: rand(14..18))
 end
 puts "descriptions created"
 
