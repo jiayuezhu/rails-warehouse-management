@@ -17,10 +17,10 @@ gem 'sass-rails'
 gem 'simple_form'
 gem 'uglifier'
 gem 'webpacker'
-gem 'searchkick', '~> 3.0'
 gem 'jquery-ui-rails'
 gem 'simple_form_autocomplete'
 gem 'rails4-autocomplete'
+gem 'pg_search'
 
 group :development do
   gem 'web-console', '>= 3.3.0'

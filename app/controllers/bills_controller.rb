@@ -1,14 +1,9 @@
 class BillsController < ApplicationController
   def index
-    @bills = Bill.all.order(created_at: :desc)
-    search = Bill.search(params[:query]).to_a
-    puts search
-    if search.any?
-      @bills = search
-      puts "************************** success ******************************"
+    if params[:query].present?
+      @bills = Bill.search_bills("%#{params[:query]}%")
     else
-      @bills = Bill.all
-      puts "************************** Fuck ******************************"
+      @bills = Bill.all.order(created_at: :desc)
     end
   end
 

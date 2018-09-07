@@ -1,6 +1,8 @@
-<%= form_tag all_buyers_path, method: :get do %>
-  <%= text_field_tag "query", params[:query], placeholder: "Search by any customer info..." %>
-  <%= submit_tag "Search" %>
+<%= form_tag bills_path, method: :get do %>
+  <%= text_field_tag :query,
+    params[:query],
+    class: "form-control",
+    placeholder: "Find a customer/buyer..."%>
 <% end %>
 <% @buyers.each do |buyer| %>
   <% if buyer.name != "lingshouguke" %>

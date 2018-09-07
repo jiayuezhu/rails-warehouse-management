@@ -1,14 +1,10 @@
  class ProductsController < ApplicationController
   def index
     # @products = policy_scope(Product).order(created_at: :desc)
-    search = Product.search(params[:query]).to_a
-    puts search
-    if search.any?
-      @products = search
-      puts "************************** success ******************************"
+    if params[:query].present?
+      @products = Product.search_by("%#{params[:query]}%")
     else
       @products = Product.all
-      puts "************************** Fuck ******************************"
     end
   end
 

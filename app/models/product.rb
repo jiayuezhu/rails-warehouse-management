@@ -10,20 +10,26 @@ class Product < ApplicationRecord
   validates :purchase_price, presence: true, format: { with: /(\d)+.\d{0,2}/ }
   validates :storage, presence: true, format: { with: /(\d)+/ }
   validates :wholesale_labeled_price, presence: true, format: { with: /(\d)+.\d{0,2}/ }
-  # include PgSearch
-  # pg_search_scope :search_by,
-  #   against: [ :name, :brand, :model, :category ],
-  #   using: {
-  #     tsearch: { prefix: true, any_word: true },
-  #     tsearch: :trigram
-  #   }
-  searchkick word_middle: [:name, :brand, :category, :model]
-  def search_data
-    {
-      name: name,
-      model: model,
-      brand: brand,
-      category: category
+  include PgSearch
+  pg_search_scope :search_by,
+    against: {
+      name: "A",
+      brand: "B",
+      model: "C",
+      category: "D"
+    },
+    :using => {
+      # tsearch: {any_word: true, prefix: true, dictionary: "english"}
+      :tsearch => {:dictionary  => 'english', :prefix => true, :any_word => true, highlight: {
+                        StartSel: '<start>',
+                        StopSel: '<stop>',
+                        MaxWords: 123,
+                        MinWords: 456,
+                        ShortWord: 4,
+                        HighlightAll: true,
+                        MaxFragments: 3,
+                        FragmentDelimiter: '&hellip;'
+                      }},
+      :trigram => {:threshold => 0.05}
     }
-  end
 end

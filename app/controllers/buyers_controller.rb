@@ -1,37 +1,17 @@
 class BuyersController < ApplicationController
   def all_buyers
-    search = Buyer.search(params[:query]).to_a
-    puts search
-    if search.any?
-      results = []
-      search.each do |s|
-        if s.is_buyer == true
-          results << s
-        end
-      end
-      @buyers = results
-      puts "************************** success ******************************"
+    if params[:query].present?
+      @buyers = Buyer.where(is_buyer: true).search_buyers("%#{params[:query]}%")
     else
-      @buyers = Buyer.where(is_buyer: true).order(name: :asc)
-      puts "************************** Fuck ******************************"
+      @buyers = Buyer.where(is_buyer: true)
     end
   end
 
   def all_sellers
-    search = Buyer.search(params[:query]).to_a
-    puts search
-    if search.any?
-      results = []
-      search.each do |s|
-        if s.is_buyer == false
-          results << s
-        end
-      end
-      @buyers = results
-      puts "************************** success ******************************"
+    if params[:query].present?
+      @buyers = Buyer.where(is_buyer: false).search_buyers("%#{params[:query]}%")
     else
-      @buyers = Buyer.where(is_buyer: false).order(name: :asc)
-      puts "************************** Fuck ******************************"
+      @buyers = Buyer.where(is_buyer: false)
     end
   end
 

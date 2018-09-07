@@ -1,6 +1,8 @@
 <%= form_tag products_path, method: :get do %>
-  <%= text_field_tag "query", params[:query], placeholder: '搜索任何产品信息...' %>
-  <%= submit_tag "搜索" %>
+  <%= text_field_tag :query,
+    params[:query],
+    class: "form-control",
+    placeholder: "Find a product..."%>
 <% end %>
 <% @products.each do |product| %>
   <%= link_to product_path(product) do %>
