@@ -1,0 +1,12 @@
+<h1><%= @buyer.name %></h1>
+<br>
+<% if @buyer.is_buyer == true %>
+  <p>I'm a buyer/customer</p>
+<% else %>
+  <p>I'm a supplier</p>
+<% end %>
+<br>
+<%= link_to "Edit Customer Info", edit_buyer_path(@buyer) if @buyer.is_buyer == true %><br>
+<%= link_to "Return To All Customers", all_buyers_path if @buyer.is_buyer == true %>
+<%= link_to "Edit Supplier Info", edit_seller_path(@buyer) if @buyer.is_buyer == false %><br>
+<%= link_to "Return To All Suppliers", all_sellers_path if @buyer.is_buyer == false %>

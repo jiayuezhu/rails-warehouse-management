@@ -1,0 +1,15 @@
+<%= form_tag all_buyers_path, method: :get do %>
+  <%= text_field_tag "query", params[:query], placeholder: "Search by any supplier's info..." %>
+  <%= submit_tag "Search" %>
+<% end %>
+<% @buyers.each do |buyer| %>
+  <%= link_to buyer_path(buyer) do %>
+    Contact name： <%= buyer.name %>
+    Company name: <%= buyer.company %>
+  <% end %>
+  <br>
+<% end %>
+<br>
+<%= link_to "Click to add a new supplier", new_seller_path %>
+<br>
+<%= link_to "Return", customers_path %>

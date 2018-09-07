@@ -1,6 +1,9 @@
+<%= form_tag bills_path, method: :get do %>
+  <%= text_field_tag "query", params[:query], placeholder: 'search by bill date or notes...' %>
+  <%= submit_tag "Search" %>
+<% end %>
 <% @bills.each do |bill| %>
   <%= link_to bill_path(bill) do %>
-    <%= bill.notes %>
     <div><%= bill.created_at.strftime("%Y-%m-%d") %></div>
   <% end %>
 <% end %>

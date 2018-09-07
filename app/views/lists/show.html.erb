@@ -1,17 +1,110 @@
-<%= @list.id %>
-<%= @list.buyer %>
-<%= @list.seller %>
-<% @list.wholesales.each do |w| %>
-  <%= w.id %>
-<% end %>
+<style type="text/css">
+  table {
+      border-collapse: collapse;
+  }
+  table, th, td {
+    border: 1px solid black;
+    padding: 20px 30px;
+    text-align: center;
+  }
+  .hidden-product {
+    height:0px;
+    display: none;
+  }
+  .open-product {
+    height:350px;
+    transition: height 1s;
+  }
+</style>
 
-<%= link_to "删除", list_path(@list), method: :delete, data: { confirm: '如果删除将无法恢复？' } %>
-<%= link_to "返回", bill_path(@bill) %>
+<h1>顾客<<%= @list.buyer.name %>>的订单</h1>
+<p>订单实际交易日期： <%= @list.created_at.strftime("%Y-%m-%d") %></p>
 
-<%= simple_form_for [ @list, @wholesale ] do |form| %>
-  <%= form.input :price, label: "商品单价（￥人民币）", placeholder: '00.00' %>
-  <%= form.input :quantity, label: "商品数量", input_html: {value: 1} if @list.buyer == "零售" %>
-  <%= form.input :quantity, label: "商品数量" if @list.buyer != "零售" %>
-  <%= form.association :product, label: "选择一个产品", prompt: "产品品牌 - 产品名字 - 产品颜色 - 产品型号", label_method: lambda { |product| "#{product.brand} - #{product.name} - #{product.color} - #{product.model}" } %>
-  <%= form.button :submit %>
-<% end %>
+<div id="box" >
+  <button class="btn btn-success btn-lg" id="add">点击添加售货</button>
+  <div class="hidden-product" id="form">
+    <%= simple_form_for [ @list, @wholesale ] do |form| %>
+      <%= form.input :price, label: "商品单价（￥人民币）", placeholder: '00.00' %>
+      <%= form.input :quantity, label: "商品数量", input_html: {value: 1} if Buyer.find(@list.buyer_id).name == "lingshoukehu" %>
+      <%= form.input :quantity, label: "商品数量" if Buyer.find(@list.buyer_id).name != "lingshoukehu" %>
+      <%= form.association :product, collection: Product.all.order(:brand), label: "选择一个产品", prompt: "产品品牌 - 产品名字 - 产品颜色/口味 - 产品型号", label_method: lambda { |product| "#{product.brand} - #{product.name} - #{product.color} - #{product.model}" } %>
+      <%= form.button :submit %>
+    <% end %>
+    <%= link_to "找不到想要的产品？点击添加新产品吧", new_product_path %>
+  </div>
+</div>
+<table>
+  <tr>
+    <th><p>产品名字</p></th>
+    <th><p>产品型号</p></th>
+    <th><p>产品颜色/口味</p></th>
+    <th><p>出售数量(个)</p></th>
+    <th><p>实际售价(￥)</p></th>
+    <th><p>批发标价(￥)</p></th>
+    <th><p>输入日期</p></th>
+    <th><p>输入时间</p></th>
+  </tr>
+  <% @list.wholesales.each do |w| %>
+    <% if w.price >= w.product.purchase_price %>
+      <tr>
+        <td><%= w.product.name %></td>
+        <td><%= w.product.model %></td>
+        <td><%= w.product.color.present? ? w.product.color : "无颜色/口味" %></td>
+        <td><%= w.quantity %></td>
+        <td><%= w.price %></td>
+        <td><%= w.product.wholesale_labeled_price.round(2) %></td>
+        <td><%= w.created_at.strftime("%Y-%m-%d") %></td>
+        <td><%= w.created_at.strftime("%T") %></td>
+      </tr>
+    <% else %>
+        <tr style="background-color: yellow">
+        <td><%= w.product.name %></td>
+        <td><%= w.product.model %></td>
+        <td><%= w.product.color.present? ? w.product.color : "无颜色/口味" %></td>
+        <td><%= w.quantity %></td>
+        <td><%= w.price %></td>
+        <td><%= w.product.wholesale_labeled_price.round(2) %></td>
+        <td><%= w.created_at.strftime("%Y-%m-%d") %></td>
+        <td><%= w.created_at.strftime("%T") %></td>
+      </tr>
+    <% end %>
+  <% end %>
+  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <% if @list.wholesales.any? %>
+      <td><p>应收：￥<%= @list.price_total %></p></td>
+      <td><p>实收：￥</p></td>
+      <td><p>盈利：￥<%= @list.sub_total %></p></td>
+      <td><p>欠款：￥</p></td>
+    <% else %>
+      <td>赶快添加售货吧</td>
+      <td></td>
+      <td></td>
+      <td></td>
+    <% end %>
+  </tr>
+</table>
+<p>*黄色表示产品无盈利或正在亏损*</p>
+<%= link_to "删除#{@list.buyer.name}的订单", list_path(@list), method: :delete, data: { confirm: '如果删除将无法恢复？' } %><br>
+<%= link_to "返回到总账单", bill_path(@bill) %>
+
+
+
+
+
+<script type="text/javascript">
+  document.getElementById("add").addEventListener("click", function(event) {
+    console.log("yeah babe");
+    const form = document.getElementById("form");
+    form.classList.toggle("hidden-product");
+    form.classList.toggle("open-product");
+  });
+</script>
+
+
+
+
+

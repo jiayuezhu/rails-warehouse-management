@@ -1,0 +1,10 @@
+<%= simple_form_for @buyer do |f| %>
+  <h1>Update Supplier: <%= @buyer.company %></h1>
+  <%= f.input :company, label: "Company Name" %>
+  <%= f.input :name, label: "Contact Name" %>
+  <%= f.input :phone_number, label: "Contact Number" %>
+  <%= f.input :email, label: "Contact Email" %>
+  <%= f.input :address, label: "Contact Address" %>
+  <%= f.input :website, label: "Company Website URL" %>
+  <%= f.button :submit, "Update" %>
+<% end %>

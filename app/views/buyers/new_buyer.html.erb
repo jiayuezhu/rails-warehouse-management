@@ -1,0 +1,11 @@
+<%= simple_form_for @buyer do |f| %>
+  <h1>Add A New Customer/Buyer</h1>
+  <%= f.input :name, label: "Contact Name" %>
+  <%= f.input :company, label: "Company Name" %>
+  <%= f.input :phone_number, label: "Contact Number" %>
+  <%= f.input :email, label: "Contact Email" %>
+  <%= f.input :address, label: "Contact Address" %>
+  <%= f.input :is_buyer, as: :hidden, input_html: { value: true } %>
+  <%= f.button :submit, "Save Customer/Buyer" %>
+<% end %>
+

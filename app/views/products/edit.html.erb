@@ -4,8 +4,9 @@
   <%= f.input :name, label: "商品名字" %>
   <%= f.input :model, label: "型号" %>
   <%= f.input :category, label: "分类" %>
-  <%= f.input :color, label: "颜色" %>
+  <%= f.input :color, label: "颜色/口味" %>
   <%= f.input :purchase_price, label: "进货价（￥人民币）", placeholder: '00.00' %>
   <%= f.input :wholesale_labeled_price, label: "批发定价（￥人民币）", placeholder: '00.00' %>
   <%= f.button :submit, "更新数据" %>
+  <%= link_to "Cancel", :back %>
 <% end %>

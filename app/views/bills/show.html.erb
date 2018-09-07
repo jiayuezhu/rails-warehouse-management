@@ -1,21 +1,53 @@
-<% @bill.lists.each do |list| %>
+<style type="text/css">
+  .hidden-notes {
+    height:0px;
+    display: none;
+  }
+  .open-notes {
+    height:150px;
+
+  }
+</style>
+
+<h1>Bill on <%= @bill.created_at.strftime("%Y-%m-%d") %></h1>
+<p>Bill notes: <%= @bill.notes %></p>
+<br>
+<% @bill.lists.order(created_at: :desc).each do |list| %>
   <%= link_to list_path(list) do %>
-    <%= list.seller if !list.seller.nil? %>
-    <%= list.buyer if !list.buyer.nil? %>
+    Customer <%= list.buyer.name if !list.buyer.nil? %>'s Purchase List<br>
   <% end %>
 <% end %>
-<p>Bill Id</p>
-<%= @bill.id %>
-<%= link_to new_bill_retail_path(@bill) do %>
-  <button class="btn btn-primary btn-md">添加零售清单</button>
-<% end %>
+<br>
 <%= link_to new_bill_wholesale_path(@bill) do %>
-  <button class="btn btn-warning btn-md">添加批发清单</button>
+  <button class="btn btn-warning btn-md">Add A New Wholesale Bill</button>
 <% end %>
-<%= link_to new_bill_purchase_path(@bill) do %>
-  <button class="btn btn-info btn-md">添加进货清单</button>
-<% end %>
-<%= link_to "返回", bills_path %>
-<script type="text/javascript">
 
+<%= link_to new_bill_retail_path(@bill) do %>
+  <button class="btn btn-primary btn-md">Add A New Retail Deal</button>
+<% end %>
+
+<%= link_to new_bill_purchase_path(@bill) do %>
+  <button class="btn btn-info btn-md">Add A New Wholesale Purchase Bill</button>
+<% end %>
+<br>
+<br>
+<div id="box">
+  <button class="btn btn-success" id="add">Add/Update Notes</button>
+  <div class="hidden-notes" id="form">
+    <%= simple_form_for @bill do |f| %>
+      <%= f.input :notes %>
+      <%= f.button :submit, "Confirm" %>
+    <% end %>
+  </div>
+</div>
+<%= link_to "Return", bills_path %>
+
+<script type="text/javascript">
+  document.getElementById("add").addEventListener("click", function(event) {
+    console.log("yeah babe");
+    const form = document.getElementById("form");
+    const button = document.getElementById("add");
+    form.classList.toggle("hidden-notes");
+    form.classList.toggle("open-notes");
+  });
 </script>

@@ -1,0 +1,17 @@
+<%= form_tag all_buyers_path, method: :get do %>
+  <%= text_field_tag "query", params[:query], placeholder: "Search by any customer info..." %>
+  <%= submit_tag "Search" %>
+<% end %>
+<% @buyers.each do |buyer| %>
+  <% if buyer.name != "lingshouguke" %>
+    <%= link_to buyer_path(buyer) do %>
+      customer's name： <%= buyer.name %>
+      customer's address: <%= buyer.address %>
+    <% end %>
+    <br>
+  <% end %>
+<% end %>
+<br>
+<%= link_to "Click to add a new customer/buyer", new_buyer_path %>
+<br>
+<%= link_to "Return", customers_path %>

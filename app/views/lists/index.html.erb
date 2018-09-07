@@ -9,8 +9,8 @@
   <% @lists.each do |list| %>
       <%= link_to list_path(list) do %>
         <div class="lol">
-          <div class="wow"><p>交易时间</p><%= list.created_at.strftime("%Y-%m-%d") %></div>
-          <div class="wow"><p>买家</p><%= list.buyer %></div>
+          <div class="wow"><p>Trade Time: </p><%= list.created_at.strftime("%Y-%m-%d") %></div>
+          <div class="wow"><p>Buyer: </p><%= list.buyer %></div>
         </div>
       <% end %>
   <% end %>

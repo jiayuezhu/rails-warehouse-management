@@ -28,11 +28,20 @@ class ListsController < ApplicationController
     if @list.save
       redirect_to list_path(@list)
     else
-      render :new
+      redirect_to bills_path
+      flash[:alert] = "Failed to add. Please try again."
     end
   end
 
-  def edit
+  def edit_retail
+    @list = List.find(params[:id])
+  end
+
+  def edit_wholesale
+    @list = List.find(params[:id])
+  end
+
+  def edit_purchase
     @list = List.find(params[:id])
   end
 
@@ -42,7 +51,8 @@ class ListsController < ApplicationController
     if @list.update(list_params)
       redirect_to bill_path(@bill)
     else
-      render :edit
+      redirect_to bills_path
+      flash[:alert] = "Failed to update. Please try again."
     end
   end
 
@@ -55,6 +65,6 @@ class ListsController < ApplicationController
   private
 
   def list_params
-    params.require(:list).permit(:buyer, :seller, :bill_id, :sub_total, :tax, :price_total, :notes, :created_at)
+    params.require(:list).permit(:buyer_id, :seller_id, :bill_id, :sub_total, :tax, :price_total, :notes, :created_at)
   end
 end

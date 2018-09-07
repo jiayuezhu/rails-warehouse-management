@@ -8,13 +8,13 @@
     <%= f.input :email,
                 required: true,
                 autofocus: true,
-                label: "电子邮箱",
+                label: "Email",
                 value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email),
                 input_html: { autocomplete: "email" } %>
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit, "重新发送重设密码指南到我的邮箱" %>
+    <%= f.button :submit, "Resend confirmation instructions" %>
   </div>
 <% end %>
 

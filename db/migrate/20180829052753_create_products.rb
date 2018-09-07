@@ -10,7 +10,7 @@ class CreateProducts < ActiveRecord::Migration[5.2]
       t.float :purchase_price
       t.float :retail_labeled_price
       t.float :wholesale_labeled_price
-      t.integer :retail_sole
+      t.integer :retail_sold
       t.integer :wholesale_sold
 
       t.timestamps

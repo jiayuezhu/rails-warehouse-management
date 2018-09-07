@@ -1,12 +1,11 @@
 <%= form_tag products_path, method: :get do %>
-  <%= text_field_tag "query", params[:query] %>
-  <%= submit_tag "Search" %>
+  <%= text_field_tag "query", params[:query], placeholder: '搜索任何产品信息...' %>
+  <%= submit_tag "搜索" %>
 <% end %>
 <% @products.each do |product| %>
   <%= link_to product_path(product) do %>
-    <p><%= product.name %></p>
-    <p><%= product.category %></p>
-    <p>￥<%= product.purchase_price %></p>
+    <p><%= product.name %>  <%= product.category %>  ￥<%= product.purchase_price %></p>
   <% end %>
+  <br>
 <% end %>
 <%= link_to "添加新产品", new_product_path %>

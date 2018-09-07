@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_29_211443) do
+ActiveRecord::Schema.define(version: 2018_09_03_014521) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,6 +19,20 @@ ActiveRecord::Schema.define(version: 2018_08_29_211443) do
     t.string "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "buyers", force: :cascade do |t|
+    t.string "name"
+    t.string "address"
+    t.string "phone_number"
+    t.string "wechat_id"
+    t.string "company"
+    t.string "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "email"
+    t.boolean "is_buyer"
+    t.string "website"
   end
 
   create_table "descriptions", force: :cascade do |t|
@@ -38,16 +52,19 @@ ActiveRecord::Schema.define(version: 2018_08_29_211443) do
   end
 
   create_table "lists", force: :cascade do |t|
-    t.string "buyer"
-    t.string "seller"
     t.string "notes"
     t.float "sub_total"
+    t.float "paid"
+    t.float "owed"
+    t.boolean "is_finished"
     t.float "tax"
     t.float "price_total"
     t.bigint "bill_id"
+    t.bigint "buyer_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["bill_id"], name: "index_lists_on_bill_id"
+    t.index ["buyer_id"], name: "index_lists_on_buyer_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -60,7 +77,7 @@ ActiveRecord::Schema.define(version: 2018_08_29_211443) do
     t.float "purchase_price"
     t.float "retail_labeled_price"
     t.float "wholesale_labeled_price"
-    t.integer "retail_sole"
+    t.integer "retail_sold"
     t.integer "wholesale_sold"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
