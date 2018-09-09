@@ -1,6 +1,7 @@
 class Wholesale < ApplicationRecord
   belongs_to :product
   belongs_to :list
+  belongs_to :user
 
   # def product_name
   #   product.try(:name)

@@ -6,8 +6,8 @@
 <% end %>
 <% @products.each do |product| %>
   <%= link_to product_path(product) do %>
-    <p><%= product.name %>  <%= product.category %>  ￥<%= product.purchase_price %></p>
+    <p><%= product.name %>  <%= product.category %>  $<%= product.purchase_price %></p>
   <% end %>
   <br>
 <% end %>
-<%= link_to "添加新产品", new_product_path %>
+<%= link_to "Add a new product", new_product_path %>

@@ -16,6 +16,8 @@ class WholesalesController < ApplicationController
         flash[:alert] = "Your #{@product.name} is currently out of stock."
       elsif @product.storage == params[:wholesale][:quantity].to_i
         @wholesale = Wholesale.new(wholesale_params)
+        @wholesale.user = current_user
+        authorize @wholesale
         @wholesale.list = @list
         if @wholesale.save
           @list.update(price_total: @list.price_total + (params[:wholesale][:price].to_f * params[:wholesale][:quantity].to_i).round(2),
@@ -33,6 +35,8 @@ class WholesalesController < ApplicationController
         flash[:alert] = "You only have #{@product.storage} #{@product.name}s in stock."
       else
         @wholesale = Wholesale.new(wholesale_params)
+        @wholesale.user = current_user
+        authorize @wholesale
         @wholesale.list = @list
         if @wholesale.save
           @list.update(price_total: @list.price_total + (params[:wholesale][:price].to_f * params[:wholesale][:quantity].to_i).round(2),
@@ -49,6 +53,8 @@ class WholesalesController < ApplicationController
 
     elsif @list.buyer.is_buyer == false
       @wholesale = Wholesale.new(wholesale_params)
+      @wholesale.user = current_user
+      authorize @wholesale
       @wholesale.list = @list
       if @wholesale.save
         @list.update(price_total: @list.price_total + (@product.purchase_price * params[:wholesale][:quantity].to_i).round(2))
@@ -66,6 +72,6 @@ class WholesalesController < ApplicationController
   private
 
   def wholesale_params
-    params.require(:wholesale).permit(:id, :product_id, :quantity, :price)
+    params.require(:wholesale).permit(:id, :product_id, :quantity, :price, :user_id)
   end
 end

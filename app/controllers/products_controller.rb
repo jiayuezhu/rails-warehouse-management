@@ -1,10 +1,11 @@
  class ProductsController < ApplicationController
+  before_action :authorize_product, only: [:show, :edit, :update, :destroy]
   def index
     # @products = policy_scope(Product).order(created_at: :desc)
     if params[:query].present?
-      @products = Product.search_by("%#{params[:query]}%")
+      @products = policy_scope(Product).search_by("%#{params[:query]}%").select { |product| product.user == current_user }
     else
-      @products = Product.all
+      @products = policy_scope(Product).select { |product| product.user == current_user }
     end
   end
 
@@ -14,21 +15,25 @@
 
   def new_similar
     old_product = Product.find(params[:id])
-    @new_product = Product.new(name: old_product.name,
+    @new_product = Product.new(user_id: current_user.id,
+                               name: old_product.name,
                                brand: old_product.brand,
                                model: old_product.model,
                                category: old_product.category,
                                purchase_price: old_product.purchase_price,
                                wholesale_labeled_price: old_product.wholesale_labeled_price)
+    authorize @new_product
   end
 
   def new
     @product = Product.new
-    # authorize @product
+    authorize @product
   end
 
   def create
     @product = Product.new(set_product)
+    @product.user = current_user
+    authorize @product
     if @product.save
       redirect_to product_path(@product)
     else
@@ -41,16 +46,19 @@
   end
 
   def update
-    @product = Product.find(params[:id])
-    if @product.update(product_params)
+    @product = current_user.products.find(params[:id])
+    authorize @product
+    if @product.update(set_product)
       redirect_to products_path(@product)
+      flash[:notice] = "Successfully updated !"
     else
       render :edit
     end
   end
 
   def destroy
-    @product = Product.find(params[:id])
+    @product = current_user.products.find(params[:id])
+    authorize @product
     @product.destroy
     redirect_to products_path
   end
@@ -69,6 +77,12 @@
   private
 
   def set_product
-    params.require(:product).permit(:name, :model, :category, :color, :storage, :brand, :purchase_price, :retail_price, :retail_labeled_price, :wholesale_labeled_price)
+    params.require(:product).permit(:name, :user_id, :model, :category, :color, :storage, :brand, :purchase_price, :retail_price, :retail_labeled_price, :wholesale_labeled_price)
   end
+
+  def authorize_product
+    @product = Product.find(params[:id])
+    authorize @product
+  end
+
 end

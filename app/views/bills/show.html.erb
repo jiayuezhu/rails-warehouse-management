@@ -12,22 +12,22 @@
 <h1>Bill on <%= @bill.created_at.strftime("%Y-%m-%d") %></h1>
 <p>Bill notes: <%= @bill.notes %></p>
 <br>
-<% @bill.lists.order(created_at: :desc).each do |list| %>
+<% @bill.lists.order(created_at: :desc).select { |product| product.user == current_user }.each do |list| %>
   <%= link_to list_path(list) do %>
     Customer <%= list.buyer.name if !list.buyer.nil? %>'s Purchase List<br>
   <% end %>
 <% end %>
 <br>
 <%= link_to new_bill_wholesale_path(@bill) do %>
-  <button class="btn btn-warning btn-md">Add A New Wholesale Bill</button>
+  <button class="btn btn-warning btn-md">New Wholesale List</button>
 <% end %>
 
 <%= link_to new_bill_retail_path(@bill) do %>
-  <button class="btn btn-primary btn-md">Add A New Retail Deal</button>
+  <button class="btn btn-primary btn-md">New Retail List</button>
 <% end %>
 
 <%= link_to new_bill_purchase_path(@bill) do %>
-  <button class="btn btn-info btn-md">Add A New Wholesale Purchase Bill</button>
+  <button class="btn btn-info btn-md">New Purchase List</button>
 <% end %>
 <br>
 <br>

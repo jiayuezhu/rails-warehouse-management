@@ -1,6 +1,7 @@
 <style type="text/css">
   table {
       border-collapse: collapse;
+      font-size: 14px;
   }
   table, th, td {
     border: 1px solid black;
@@ -15,41 +16,51 @@
     height:350px;
     transition: height 1s;
   }
+  table tr:nth-child(odd) td{
+    background-color: while;
+  }
+  table tr:nth-child(even) td{
+    background-color: lightgrey;
+  }
 </style>
 
-<h1>顾客<<%= @list.buyer.name %>>的订单</h1>
-<p>订单实际交易日期： <%= @list.created_at.strftime("%Y-%m-%d") %></p>
+<% if @list.buyer.name == "lingshoukehu" %>
+  <h1>Retail Customer's Order List</h1>
+<% else %>
+  <h1>Customer <%= @list.buyer.name %>'s Order List</h1>
+<% end %>
+<p>Order placed on： <%= @list.created_at.strftime("%Y-%m-%d") %></p>
 
 <div id="box" >
-  <button class="btn btn-success btn-lg" id="add">点击添加售货</button>
+  <button class="btn btn-success btn-lg" id="add">Add a new item</button>
   <div class="hidden-product" id="form">
     <%= simple_form_for [ @list, @wholesale ] do |form| %>
-      <%= form.input :price, label: "商品单价（￥人民币）", placeholder: '00.00' %>
-      <%= form.input :quantity, label: "商品数量", input_html: {value: 1} if Buyer.find(@list.buyer_id).name == "lingshoukehu" %>
-      <%= form.input :quantity, label: "商品数量" if Buyer.find(@list.buyer_id).name != "lingshoukehu" %>
-      <%= form.association :product, collection: Product.all.order(:brand), label: "选择一个产品", prompt: "产品品牌 - 产品名字 - 产品颜色/口味 - 产品型号", label_method: lambda { |product| "#{product.brand} - #{product.name} - #{product.color} - #{product.model}" } %>
+      <%= form.input :price, label: "Item unit price($USD)", placeholder: '00.00' %>
+      <%= form.input :quantity, label: "Quantity", placeholder: "please enter an integer", input_html: {value: 1} if Buyer.find(@list.buyer_id).name == "lingshoukehu" %>
+      <%= form.input :quantity, label: "Quantity", placeholder: "please enter an integer" if Buyer.find(@list.buyer_id).name != "lingshoukehu" %>
+      <%= form.association :product, collection: Product.all.order(:brand), label: "Choose a product", prompt: "产品品牌 - 产品名字 - 产品颜色/口味 - 产品型号", label_method: lambda { |product| "#{product.brand} - #{product.name} - #{product.color} - #{product.model}" } %>
       <%= form.button :submit %>
     <% end %>
-    <%= link_to "找不到想要的产品？点击添加新产品吧", new_product_path %>
+    <%= link_to "Can't find the product you want? Create your own!", new_product_path %>
   </div>
 </div>
 <table>
   <tr>
-    <th><p>产品名字</p></th>
-    <th><p>产品型号</p></th>
-    <th><p>产品颜色/口味</p></th>
-    <th><p>出售数量(个)</p></th>
-    <th><p>实际售价(￥)</p></th>
-    <th><p>批发标价(￥)</p></th>
-    <th><p>输入日期</p></th>
-    <th><p>输入时间</p></th>
+    <th><p>Product Name</p></th>
+    <th><p>Product model</p></th>
+    <th><p>color/flavor</p></th>
+    <th><p>Quantity sold(integer)</p></th>
+    <th><p>Actual sold price($USD)</p></th>
+    <th><p>Wholesale labeled price($USD)</p></th>
+    <th><p>Order input date</p></th>
+    <th><p>Order input time</p></th>
   </tr>
   <% @list.wholesales.each do |w| %>
     <% if w.price >= w.product.purchase_price %>
       <tr>
         <td><%= w.product.name %></td>
         <td><%= w.product.model %></td>
-        <td><%= w.product.color.present? ? w.product.color : "无颜色/口味" %></td>
+        <td><%= w.product.color.present? ? w.product.color : "no color/flavor" %></td>
         <td><%= w.quantity %></td>
         <td><%= w.price %></td>
         <td><%= w.product.wholesale_labeled_price.round(2) %></td>
@@ -60,7 +71,7 @@
         <tr style="background-color: yellow">
         <td><%= w.product.name %></td>
         <td><%= w.product.model %></td>
-        <td><%= w.product.color.present? ? w.product.color : "无颜色/口味" %></td>
+        <td><%= w.product.color.present? ? w.product.color : "no color/flavor" %></td>
         <td><%= w.quantity %></td>
         <td><%= w.price %></td>
         <td><%= w.product.wholesale_labeled_price.round(2) %></td>
@@ -75,21 +86,21 @@
     <td></td>
     <td></td>
     <% if @list.wholesales.any? %>
-      <td><p>应收：￥<%= @list.price_total %></p></td>
-      <td><p>实收：￥</p></td>
-      <td><p>盈利：￥<%= @list.sub_total %></p></td>
-      <td><p>欠款：￥</p></td>
+      <td><p>Total price: $<%= @list.price_total %></p></td>
+      <td><p>Recieved: $</p></td>
+      <td><p>Profits: $<%= @list.sub_total %></p></td>
+      <td></td>
     <% else %>
-      <td>赶快添加售货吧</td>
+      <td>Add a new item now!</td>
       <td></td>
       <td></td>
       <td></td>
     <% end %>
   </tr>
 </table>
-<p>*黄色表示产品无盈利或正在亏损*</p>
-<%= link_to "删除#{@list.buyer.name}的订单", list_path(@list), method: :delete, data: { confirm: '如果删除将无法恢复？' } %><br>
-<%= link_to "返回到总账单", bill_path(@bill) %>
+<p>*Yellow rows mean the sale is not profiting*</p>
+<%= link_to "Delete #{@list.buyer.name}'s list'", list_path(@list), method: :delete, data: { confirm: 'Are you sure? This command is inreversible.' } %><br>
+<%= link_to "Return to all bills", bill_path(@bill) %>
 
 
 

@@ -7,6 +7,7 @@ class CreateBuyers < ActiveRecord::Migration[5.2]
       t.string :wechat_id
       t.string :company
       t.string :notes
+      t.references :user, foreign_key: true
 
       t.timestamps
     end

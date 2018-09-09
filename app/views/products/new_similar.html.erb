@@ -1,13 +1,13 @@
 <%= simple_form_for @new_product do |f| %>
-  <h1>创建新的商品</h1>
-  <%= f.input :brand, label: "商品品牌" %>
-  <%= f.input :name, label: "商品名字" %>
-  <%= f.input :model, label: "型号/货号" %>
-  <%= f.input :category, label: "分类/品种" %>
-  <%= f.input :color, label: "颜色/口味" %>
-  <%= f.input :storage, label: "当前商品库存（个）",input_html: { min: 1 }, placeholder: '0' %>
-  <%= f.input :purchase_price, label: "进货价（￥人民币）", placeholder: '00.00' %>
-  <%= f.input :wholesale_labeled_price, label: "批发定价（￥人民币）", placeholder: '00.00' %>
-  <%= f.button :submit, "保存商品" %>
+  <h1>Create a new product</h1>
+  <%= f.input :brand, label: "Product brand" %>
+  <%= f.input :name, label: "Product name" %>
+  <%= f.input :model, label: "Model" %>
+  <%= f.input :category, label: "Category(optional)" %>
+  <%= f.input :color, label: "Color/flavor(optional)" %>
+  <%= f.input :storage, label: "Current quantity in stock(integer)",input_html: { min: 1 }, placeholder: '0' %>
+  <%= f.input :purchase_price, label: "Purchase price($USD)", placeholder: '00.00' %>
+  <%= f.input :wholesale_labeled_price, label: "Wholesale labeled price($USD)", placeholder: '00.00' %>
+  <%= f.button :submit, "Save product" %>
   <%= link_to "Cancel", :back %>
 <% end %>

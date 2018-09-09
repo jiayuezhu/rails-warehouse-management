@@ -21,6 +21,7 @@ gem 'jquery-ui-rails'
 gem 'simple_form_autocomplete'
 gem 'rails4-autocomplete'
 gem 'pg_search'
+gem "pundit"
 
 group :development do
   gem 'web-console', '>= 3.3.0'

@@ -1,9 +1,13 @@
-<% if !Detail.nil? %>
+<% if Detail.present? %>
   <% @details.each do |d| %>
     <%= d.name %>
     <%= link_to "delete", detail_path(d), method: :delete, data: {confirm: "Are you sure"} %>
   <% end %>
 <% else %>
-  <h1>您目前还没有任何参数种类。</h1>
+  <h1>You don't have any data type yet !</h1>
   <%= link_to "Customize your own data type", new_detail_path %>
 <% end %>
+<br>
+<%= link_to "New data type", new_detail_path %>
+<br>
+<%= link_to "Cancel", products_path %>

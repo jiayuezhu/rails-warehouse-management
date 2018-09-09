@@ -1,7 +1,32 @@
-<h1>Welcome to #{product name undecided}</h1>
-<%= image_tag "warehouse.jpg" %>
-<%= link_to "View all products", products_path %>
+<style type="text/css">
+  .home-page {
+    background-color: white;
+  }
+  .btn-design {
+    border-radius: 10px;
+  }
+  .whole-btn {
+    position: relative;
+    top: 70vh;
+    left: 30%;
+    right: 30%;
+  }
+</style>
+<div class="home-page">
+  <div class="home-landing">
+  <div class="home-left">
+    <%= link_to new_user_registration_path, class: "whole-btn" do %>
+      <button class="btn btn-lg btn-primary btn-design">Sign up now</button>
+    <% end %>
+  </div>
+  <div class="home-right">
 
+  </div>
+  </div>
+
+  <%= image_tag "warehouse.jpg" %>
+  <%= link_to "View all products", products_path %>
+</div>
 <script type="text/javascript">
 
 </script>

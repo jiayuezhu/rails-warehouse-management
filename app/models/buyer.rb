@@ -1,5 +1,6 @@
 class Buyer < ApplicationRecord
   has_many :lists
+  belongs_to :user
   validates :name, presence: true
   include PgSearch
   pg_search_scope :search_buyers,

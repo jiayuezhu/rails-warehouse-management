@@ -1,8 +1,10 @@
 <%= simple_form_for [@bill, List.new(bill_id: @bill.id)] do |f| %>
-  <h1>新的进货清单</h1>
-  <%= f.association :buyer, collection: Buyer.where(is_buyer: false), label: "供货商", prompt: "选择公司" %>
-  <%= f.input :created_at, as: :date, :order => [:day, :month, :year], label: "交易日期" %>
+  <h1>New Purchase List</h1>
+  <%= f.association :buyer, collection: Buyer.where(is_buyer: false), label: "Supplier", prompt: "Choose a company" %>
+  <%= f.input :created_at, as: :date, :order => [:day, :month, :year], label: "Order placed on" %>
   <%= f.hidden_field :bill_id, input_html: {value: @bill.id} %>
-  <%= f.button :submit, "新建清单" %>
+  <%= f.button :submit, "Create List" %>
   <%= link_to "Cancel", :back %>
 <% end %>
+<br>
+<%= link_to "Can't find the supplier company you want? Create your own!", new_seller_path %>

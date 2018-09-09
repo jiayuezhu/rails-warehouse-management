@@ -5,15 +5,14 @@
     placeholder: "Find a customer/buyer..."%>
 <% end %>
 <% @buyers.each do |buyer| %>
-  <% if buyer.name != "lingshouguke" %>
+  <% if buyer.name != "lingshoukehu" %>
     <%= link_to buyer_path(buyer) do %>
       customer's name： <%= buyer.name %>
-      customer's address: <%= buyer.address %>
     <% end %>
     <br>
   <% end %>
 <% end %>
 <br>
-<%= link_to "Click to add a new customer/buyer", new_buyer_path %>
+<%= link_to "Add a new customer/buyer", new_buyer_path %>
 <br>
 <%= link_to "Return", customers_path %>

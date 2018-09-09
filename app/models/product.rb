@@ -3,10 +3,11 @@ class Product < ApplicationRecord
   has_many :details, through: :descriptions
   has_many :lists, through: :wholesales
   has_many :wholesales
+  belongs_to :user
   validates :name, presence: true
   validates_uniqueness_of :name, :scope => [:model, :brand, :color]
-  validates :model, presence: true
   validates :brand, presence: true
+  validates :color, length: { maximum: 20 }
   validates :purchase_price, presence: true, format: { with: /(\d)+.\d{0,2}/ }
   validates :storage, presence: true, format: { with: /(\d)+/ }
   validates :wholesale_labeled_price, presence: true, format: { with: /(\d)+.\d{0,2}/ }

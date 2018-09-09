@@ -2,9 +2,10 @@
   <h1>Add A New Supplier</h1>
   <%= f.input :company, label: "Company Name" %>
   <%= f.input :name, label: "Contact Name" %>
-  <%= f.input :phone_number, label: "Contact Number" %>
-  <%= f.input :email, label: "Contact Email" %>
-  <%= f.input :website, label: "Company Website URL" %>
-  <%= f.input :address, label: "Company Address" %>
-  <%= f.button :submit, "Save Supplier" %>
+  <%= f.input :phone_number, label: "Contact Number(optional)" %>
+  <%= f.input :email, label: "Contact Email(optional)" %>
+  <%= f.input :website, label: "Company Website URL(optional)" %>
+  <%= f.input :address, label: "Company Address(optional)" %>
+  <%= f.input :is_buyer, as: :hidden, input_html: { value: false } %>
+  <%= f.button :submit, "Save" %>
 <% end %>

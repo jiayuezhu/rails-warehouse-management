@@ -12,6 +12,7 @@ class CreateProducts < ActiveRecord::Migration[5.2]
       t.float :wholesale_labeled_price
       t.integer :retail_sold
       t.integer :wholesale_sold
+      t.references :user, foreign_key: true
 
       t.timestamps
     end

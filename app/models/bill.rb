@@ -1,5 +1,6 @@
 class Bill < ApplicationRecord
   has_many :lists
+  belongs_to :user
   include PgSearch
   pg_search_scope :search_bills,
     against: {

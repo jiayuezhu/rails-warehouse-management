@@ -1,17 +1,17 @@
 <%= @product.name %>
-￥<%= @product.purchase_price %>
-<%= link_to "删除|", product_path, method: :delete, data: {confirm: "您确定要删除该商品吗？"} %>
-<%= link_to "编辑|", edit_product_path %>
-<%= link_to "返回", products_path %>
+$<%= @product.purchase_price %>
+<%= link_to "Delete|", product_path, method: :delete, data: {confirm: "Are you sure you want to delete this product?"} %>
+<%= link_to "Edit|", edit_product_path %>
+<%= link_to "Return", products_path %>
 <br>
 <% @product.descriptions.each do |d| %>
   <%= d.detail.name %>: <%= d.parameter %>
   <br>
 <% end %>
 <br>
-<%= link_to "点击添加该商品参数", new_product_description_path(@product) %>
+<%= link_to "Add a new description to the product", new_product_description_path(@product) %>
 <br>
-<%= link_to "查看所有产品参数种类", details_path %>
+<%= link_to "View all data types", details_path %>
 <br>
 
-<%= link_to "创建一个类似<#{@product.name}>的商品", new_similar_product_path %>
+<%= link_to "Create a product that's similar to <#{@product.name}> in one click !", new_similar_product_path %>
