@@ -4,10 +4,27 @@
   }
 </style>
 
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a href="#">About</a>
+  <a href="#">Services</a>
+  <a href="#">Clients</a>
+  <a href="#">Contact</a>
+</div>
+
 <div class="navbar-home navbar-fixed-top">
   <!-- Logo -->
-  <%= link_to root_path, class: "navbar-wagon-brand" do %>
-    <%= image_tag "logo.png", height: 50, class: "logo" %>
+  <% if user_signed_in? %>
+  <div class="navbar-left">
+    <div class="navbar-box"><span onclick="openNav()" style="cursor:pointer"><%= image_tag "list.svg", class: "navbar-list" %></span></div>
+    <%= link_to root_path, class: "navbar-wagon-brand" do %>
+      <%= image_tag "logo.png", height: 50, class: "logo" %>
+    <% end %>
+  </div>
+  <% else %>
+    <%= link_to root_path, class: "navbar-wagon-brand" do %>
+      <%= image_tag "logo.png", height: 50, class: "logo" %>
+    <% end %>
   <% end %>
 <!-- <div class="nav navbar-nav navbar-left"> -->
 <!-- </div> -->
@@ -22,7 +39,7 @@
       <!-- Avatar with dropdown menu -->
       <div class="navbar-wagon-item">
         <div class="dropdown">
-          <%= image_tag "http://kitt.lewagon.com/placeholder/users/ssaunier", class: "avatar dropdown-toggle", id: "navbar-wagon-menu", "data-toggle" => "dropdown" %>
+          <%= image_tag "http://kitt.lewagon.com/placeholder/users/ssaunier", class: "avatar dropdown-toggle", style: "border-radius: 50%; height: 35px", id: "navbar-wagon-menu", "data-toggle" => "dropdown" %>
           <ul class="dropdown-menu dropdown-menu-right navbar-wagon-dropdown-menu">
             <li>
               <%= link_to "#" do %>
@@ -93,4 +110,12 @@
     </div>
   </div>
 </div>
+<script type="text/javascript">
+  function openNav() {
+    document.getElementById("mySidenav").style.width = "300px";
+}
 
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+}
+</script>
