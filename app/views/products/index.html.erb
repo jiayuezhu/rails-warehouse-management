@@ -1,13 +1,258 @@
-<%= form_tag products_path, method: :get do %>
-  <%= text_field_tag :query,
-    params[:query],
-    class: "form-control",
-    placeholder: "Find a product..."%>
-<% end %>
-<% @products.each do |product| %>
-  <%= link_to product_path(product) do %>
-    <p><%= product.name %>  <%= product.category %>  $<%= product.purchase_price %></p>
+<style type="text/css">
+  .product-landing {
+    background-image: linear-gradient(-225deg, rgba(0,101,208,0.4) 0%, rgba(0,36,61,0.4) 30%), url("/assets/business-cargo.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+  .card {
+    height: 400px;
+    margin: 20px;
+    box-shadow: 10px 2px 10px 10px rgba(0,0,0,0.1);
+  }
+  .card:hover {
+    -ms-transform: scale(1.02);
+    -moz-transform: scale(1.02);
+    -webkit-transform: scale(1.02);
+    -o-transform: scale(1.02);
+    transform: scale(1.02);
+    transition: 0.5s ease all;
+  }
+  .add-card {
+    height: 400px;
+    margin: 20px;
+    box-shadow: 10px 2px 10px 10px rgba(0,0,0,0.1);
+  }
+  .background-image {
+    height: 280px;
+  }
+  .add-image {
+    height: 100%;
+    background-image: url("/assets/new-plus.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    padding-top: 20%;
+  }
+  .add-image:hover {
+    -ms-transform: scale(1.02);
+    -moz-transform: scale(1.02);
+    -webkit-transform: scale(1.02);
+    -o-transform: scale(1.02);
+    transform: scale(1.02);
+    transition: 0.5s ease all;
+  }
+  .info {
+    background-color: white;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #aaa;
+  }
+  .info p {
+    padding: 10px;
+    font-size: 15px;
+  }
+  .dec-tag {
+    width: 80px;
+    height: 30px;
+    background-color: rgba(254,81,6,0.9);
+    color: white;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    top: -30px;
+    border-top-right-radius: 7px;
+    opacity: 0.85;
+  }
+  .stationary-tag {
+    height: 80px;
+    background-color: white;
+    position: relative;
+  }
+  .stationary-tag h2 {
+    text-align: left;
+    color: black;
+    font-size: 24px;
+    padding: 10px;
+  }
+  .stationary-tag p {
+    color: #FB691F;
+    padding-left: 16px;
+  }
+  .circle-tag {
+    background-color: rgba(254,81,6,0.8);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    color: white;
+    font-size: 15px;
+    display: flex;
+    position: relative;
+    left: 83%;
+    top: 3px;
+    line-height: 1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .slider {
+    display: flex;
+    height: 300px;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    margin-bottom: 20px;
+    box-shadow: 3px 3px 3px 3px rgba(0,0,0,0.2);
+    padding: 20px;
+  }
+  .slider-image {
+    width: 300px;
+    height: 260px;
+  }
+  .lalala {
+    white-space: nowrap;
+    margin: 0 20px;
+  }
+  .slider-image {
+    transition: transform 0.6s;
+  }
+  .quantity-tag {
+    padding: 5px;
+    background-color: rgba(0,101,208,0.8);
+    color: white;
+    width: 70%;
+    border-bottom-right-radius: 20px;
+  }
+  .lalala {
+    font-family: sans-serif;
+    position: relative;
+  }
+
+  .content {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    color: white;
+    font-size: 30px;
+  }
+
+  .overlay {
+    position: absolute;
+    top: 40%;
+    width: 100%;
+    height: 50px;
+    background-color: rgba(0,101,208,1);
+    opacity: 0;
+    transition: .5s ease;
+  }
+  .lalala:hover .overlay {
+    opacity: 1;
+  }
+  .all-product {
+  margin-top: 40px; width: 100%; height: 100px; color: white; padding-top: 20px; background-image: url("/assets/Green and Blue.jpg") ;
+  }
+  .low-instock {
+    text-align: left; margin: 20px; color: red;
+  }
+</style>
+<div class="product-landing">
+  <div class="search">
+  <%= form_tag products_path, method: :get do %>
+    <div class="search-group">
+      <div class="search-box">
+        <%= text_field_tag :query,
+          params[:query],
+          class: "form-control",
+          placeholder: "Find a product..."%>
+      </div>
+      <%= button_tag(type: "submit", class: "magnifier") do %>
+        <i class="fas fa-search"></i>
+      <% end %>
+    </div>
   <% end %>
-  <br>
+  </div>
+</div>
+
+<% if @low.present? %>
+  <h2 class="low-instock">Low In Stock<%= image_tag "exclamation.svg", height: 42, width: 42, style: "padding-bottom: 10px" %></h2>
+  <div class="slider">
+    <% @low[0..9].each do |product| %>
+      <%= link_to product_path(product) do %>
+      <div class="lalala">
+        <div class="slider-image" style="background-image: url('<%= product.photo %>'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+          <div class="quantity-tag">Quantity in stock: <%= product.storage %></div>
+          <div class="overlay">
+            <div class="content"><%= product.name %></div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    <% end %>
+  </div>
 <% end %>
-<%= link_to "Add a new product", new_product_path %>
+<h2 class="all-product">All Products</h2>
+
+<div class="container">
+  <div class="row">
+    <div class="col-xl-3 col-md-4 col-sm-6 col-xs-12">
+      <div class="add-card">
+        <%= link_to new_product_path do %>
+          <div class="add-image">Add A New Product</div>
+        <% end %>
+      </div>
+    </div>
+    <% @products.each do |product| %>
+      <%= link_to product_path(product) do %>
+      <div class="col-xl-3 col-md-4 col-sm-6 col-xs-12">
+        <div class="card">
+          <div class="background-image" style="background-image: url('<%= product.photo %>'); background-size: auto 300px; background-repeat: no-repeat; background-position: 50% 0%; ">
+            <div class="circle-tag"><div style="font-weight: bold; font-size: 16px"><%= Wholesale.where(product_id: product.id).last.present? ?  Wholesale.where(product_id: product.id).last.created_at.strftime("%d") : "Never" %></div><div style="font-weight: lighter; font-size: 12px;"><%= Wholesale.where(product_id: product.id).last.present? ?  Wholesale.where(product_id: product.id).last.created_at.strftime("%a") : "Sold" %></div></div>
+          </div>
+          <div id="stationary-tag" class="stationary-tag" ><div class="dec-tag"><div>Product</div></div><h2><%= product.name %></h2><p><%= product.brand %></p></div>
+          <div class="info"><p><%= image_tag "warehouse.svg", height: 24, width: 24, style: "padding-bottom: 6px" %> In stock: <%= product.storage %></p><p><%= image_tag "auction.svg", height: 24, width: 24, style: "padding-bottom: 6px" %> Wholesale sold: <%= product.wholesale_sold.present? ? product.wholesale_sold.present : 0 %></p></div>
+        </div>
+      </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+
+<div class="footer">
+  <%= link_to products_path do %>
+  <div class="footer-item">
+    <div class="footer-img" style="padding-left: 45px"><%= image_tag "warehouse.svg", height: 32, width: 32 %></div>
+    <p>View Inventory</p>
+  </div>
+  <% end %>
+  <%= link_to bills_path do %>
+  <div class="footer-item">
+    <div class="footer-img" style="padding-left: 37px"><%= image_tag "bill.png", height: 32, width: 32 %></div>
+    <p>View My Bills</p>
+  </div>
+  <% end %>
+  <%= link_to "#" do %>
+  <div class="footer-item">
+    <div class="footer-img" style="padding-left: 32px"><%= image_tag "profile.svg", height: 32, width: 32 %></div>
+    <p>View Profile</p>
+  </div>
+  <% end %>
+  <%= link_to customers_path do %>
+  <div class="footer-item">
+    <div class="footer-img" style="padding-left: 50px"><%= image_tag "hand-shake.svg", height: 32, width: 32 %></div>
+    <p>View Customers</p>
+  </div>
+  <% end %>
+</div>
+<script type="text/javascript">
+
+</script>
+
+

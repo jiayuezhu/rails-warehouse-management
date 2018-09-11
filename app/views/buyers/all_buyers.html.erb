@@ -1,9 +1,32 @@
-<%= form_tag bills_path, method: :get do %>
-  <%= text_field_tag :query,
-    params[:query],
-    class: "form-control",
-    placeholder: "Find a customer/buyer..."%>
-<% end %>
+<style type="text/css">
+  .buyer-landing {
+    background-image: linear-gradient(-225deg, rgba(0,101,208,0.4) 0%, rgba(0,36,61,0.4) 30%), url("/assets/customer.jpg");
+    background-size: cover;
+    background-position: bottom 50% left 50%;
+    background-repeat: no-repeat;
+    height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+</style>
+<div class="buyer-landing">
+  <div class="search">
+  <%= form_tag all_buyers_path, method: :get do %>
+    <div class="search-group">
+      <div class="search-box">
+        <%= text_field_tag :query,
+          params[:query],
+          class: "form-control",
+          placeholder: "Find a buyer/customer..."%>
+      </div>
+      <%= button_tag(type: "submit", class: "magnifier") do %>
+        <i class="fas fa-search"></i>
+      <% end %>
+    </div>
+  <% end %>
+  </div>
+</div>
 <% @buyers.each do |buyer| %>
   <% if buyer.name != "lingshoukehu" %>
     <%= link_to buyer_path(buyer) do %>

@@ -4,6 +4,7 @@ class Product < ApplicationRecord
   has_many :lists, through: :wholesales
   has_many :wholesales
   belongs_to :user
+  mount_uploader :photo, PhotoUploader
   validates :name, presence: true
   validates_uniqueness_of :name, :scope => [:model, :brand, :color]
   validates :brand, presence: true

@@ -8,6 +8,8 @@
   <%= f.input :storage, label: "Current quantity in stock(integer)",input_html: { min: 1 }, placeholder: '0' %>
   <%= f.input :purchase_price, label: "Purchase price($USD)", placeholder: '00.00' %>
   <%= f.input :wholesale_labeled_price, label: "Wholesale labeled price($USD)", placeholder: '00.00' %>
+  <%= f.input :photo, label: "Upload an image for your product" %>
+  <%= f.input :photo_cache, as: :hidden %>
   <%= f.button :submit, "Save product", data: { confirm: 'Once confirmed you will not be able to edit your quantity in stock.' }%>
   <%= link_to "Cancel", :back %>
 <% end %>

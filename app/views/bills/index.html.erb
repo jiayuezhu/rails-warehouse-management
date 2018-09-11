@@ -1,12 +1,166 @@
-<%= form_tag bills_path, method: :get do %>
-  <%= text_field_tag :query,
-    params[:query],
-    class: "form-control",
-    placeholder: "Find a bill by notes or date..."%>
-<% end %>
-<% @bills.each do |bill| %>
-  <%= link_to bill_path(bill) do %>
-    <div><%= bill.created_at.strftime("%Y-%m-%d") %></div>
+<style type="text/css">
+  .bill-landing {
+    background-image: linear-gradient(-225deg, rgba(0,101,208,0.4) 0%, rgba(0,36,61,0.4) 70%), url("/assets/analysis.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: right 0px bottom 0px;
+    height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+  .bill {
+    min-height: calc(50vh - 120px);
+    display: flex;
+  }
+  .bill-left {
+    min-height: calc(50vh - 70px);
+    width: 30%;
+    background-image: url("/assets/bill-left-background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: bottom 50% left 40%;
+  }
+  .bill-left a {
+    text-decoration: none;
+    color: black;
+  }
+  .bill-left ul {
+    list-style-type: none;
+    background-color: rgba(225,225,225,0.6);
+    width: 300px;
+    margin: 80px auto 100px auto;
+    padding-top: 1px;
+    padding-bottom: 30px;
+    border-radius: 5px;
+  }
+  .bill-left ul li{
+    text-decoration: none;
+    margin-top: 50px;
+    transition: 0.5s ease all;
+    width: 100%;
+  }
+  .bill-left ul li:hover{
+    transform: scale(1.02);
+
+
+  }
+  .bill-right {
+    width:70%;
+    padding: 20px;
+  }
+  .bill-right a {
+    text-decoration: none;
+  }
+  .bill-item {
+    height: 120px;
+    background-color: white;
+    border-radius: 10px;
+    margin-bottom: 10px;
+   -moz-box-shadow:    inset 1px 0 10px rgba(0,0,0,0.2);
+   -webkit-box-shadow: inset 1px 0 10px rgba(0,0,0,0.2);
+   box-shadow:         inset 1px 0 10px rgba(0,0,0,0.2);
+   transition: 0.5s ease all;
+   cursor: pointer;
+  }
+  .bill-item:hover {
+    background-color: #FAFAFA;
+  }
+  .bill-item:hover .bill-content-date {
+    transform: scale(1.2);
+  }
+  .bill-content {
+    padding: 20px;
+  }
+  .bill-content-date {
+    color: black;
+    text-align: center;
+    font-weight: bold;
+    transition: 0.5s ease all;
+  }
+  .bill-content-notes {
+    color: rgb(192,192,192);
+    font-size: 18px;
+    padding-left: 20px;
+  }
+</style>
+<div class="bill-landing">
+  <div class="search">
+  <%= form_tag bills_path, method: :get do %>
+    <div class="search-group">
+      <div class="search-box">
+        <%= text_field_tag :query,
+          params[:query],
+          class: "form-control",
+          placeholder: "Find a bill by date or notes..."%>
+      </div>
+      <%= button_tag(type: "submit", class: "magnifier") do %>
+        <i class="fas fa-search"></i>
+      <% end %>
+    </div>
   <% end %>
-<% end %>
-<%= link_to "New Bill", new_bill_path %>
+  </div>
+</div>
+<div class="bill">
+
+      <div class="bill-left">
+        <ul>
+          <li><%= link_to "All bills", bills_path %></li>
+          <li><%= link_to "Create A New Bill", new_bill_path %></li>
+          <li><%= link_to "View My Weekly Report" %></li>
+          <li><%= link_to "View My Monthly Report" %></li>
+          <li><%= link_to "View My Annual Report" %></li>
+        </ul>
+      </div>
+
+      <div class="bill-right">
+      <% @bills.each do |bill| %>
+        <div class="bill-item">
+          <%= link_to bill_path(bill) do %>
+            <div class="bill-content">
+              <div class="bill-content-date"><%= bill.created_at.strftime("%Y-%m-%d") %></div>
+              <div class="bill-content-notes"><%= image_tag "notepad.svg", height: 26, width: 26 %> Notes: <% if bill.notes.present? %>
+                                                      <% if bill.notes.chars.count >= 80 %>
+                                                        <%= bill.notes.first(80) + " ..." %>
+                                                      <% else %>
+                                                        <%= bill.notes %>
+                                                      <% end %>
+                                                     <% else %>
+                                                      <%= "No notes added." %>
+                                                     <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <%= link_to products_path do %>
+  <div class="footer-item">
+    <div class="footer-img" style="padding-left: 45px"><%= image_tag "warehouse.svg", height: 32, width: 32 %></div>
+    <p>View Inventory</p>
+  </div>
+  <% end %>
+  <%= link_to bills_path do %>
+  <div class="footer-item">
+    <div class="footer-img" style="padding-left: 37px"><%= image_tag "bill.png", height: 32, width: 32 %></div>
+    <p>View My Bills</p>
+  </div>
+  <% end %>
+  <%= link_to "#" do %>
+  <div class="footer-item">
+    <div class="footer-img" style="padding-left: 32px"><%= image_tag "profile.svg", height: 32, width: 32 %></div>
+    <p>View Profile</p>
+  </div>
+  <% end %>
+  <%= link_to customers_path do %>
+  <div class="footer-item">
+    <div class="footer-img" style="padding-left: 50px"><%= image_tag "hand-shake.svg", height: 32, width: 32 %></div>
+    <p>View Customers</p>
+  </div>
+  <% end %>
+</div>

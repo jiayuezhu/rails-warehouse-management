@@ -5,7 +5,10 @@
     if params[:query].present?
       @products = policy_scope(Product).search_by("%#{params[:query]}%").select { |product| product.user == current_user }
     else
-      @products = policy_scope(Product).select { |product| product.user == current_user }
+      @products = policy_scope(Product).paginate(:page => params[:page], :per_page => 30).select { |product| product.user == current_user }
+      @low = policy_scope(Product).order( storage: :asc ).select { |product| product.user == current_user }
+      @wholesale_products = policy_scope(Product).order( wholesale_sold: :desc ).select { |product| product.user == current_user }
+      @retail_products = policy_scope(Product).order( retail_sold: :desc ).select { |product| product.user == current_user }
     end
   end
 
@@ -77,7 +80,7 @@
   private
 
   def set_product
-    params.require(:product).permit(:name, :user_id, :model, :category, :color, :storage, :brand, :purchase_price, :retail_price, :retail_labeled_price, :wholesale_labeled_price)
+    params.require(:product).permit(:name, :photo, :user_id, :model, :category, :color, :storage, :brand, :purchase_price, :retail_price, :retail_labeled_price, :wholesale_labeled_price)
   end
 
   def authorize_product

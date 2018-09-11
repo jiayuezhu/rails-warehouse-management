@@ -1,6 +1,7 @@
 class Bill < ApplicationRecord
   has_many :lists
   belongs_to :user
+  validates :created_at, uniqueness: true
   include PgSearch
   pg_search_scope :search_bills,
     against: {

@@ -22,8 +22,11 @@ gem 'simple_form_autocomplete'
 gem 'rails4-autocomplete'
 gem 'pg_search'
 gem "pundit"
+gem 'will_paginate', '~> 3.1.0'
 
 gem 'dotenv-rails', groups: [:development, :test]
+gem 'cloudinary'
+gem 'carrierwave', '~> 1.2'
 group :development do
   gem 'web-console', '>= 3.3.0'
 end

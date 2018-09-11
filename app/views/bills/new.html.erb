@@ -1,7 +1,7 @@
 <%= simple_form_for @bill do |f| %>
   <h1>Create A New Bill</h1>
   <%= f.input :notes, label: "Notes(optional)" %>
-  <%= f.input :created_at, as: :date, :order => [:day, :month, :year], label: "Bill Date", start_year: Date.today.year - 1, end_year: Date.today.year + 1 %>
+  <%= f.input :created_at, as: :date, :order => [:day, :month, :year], label: "Bill Date (note: you may only have one bill on the same date)", start_year: Date.today.year - 1, end_year: Date.today.year + 1 %>
   <%= f.button :submit, "Create" %>
 <% end %>
 <%= link_to "Cancel", :back %>
