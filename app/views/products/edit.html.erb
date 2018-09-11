@@ -7,6 +7,8 @@
   <%= f.input :color, label: "Color/flavor" %>
   <%= f.input :purchase_price, label: "Purchase price($USD)", placeholder: '00.00' %>
   <%= f.input :wholesale_labeled_price, label: "Wholesael labeled price($USD})", placeholder: '00.00' %>
+  <%= f.input :photo, label: "Upload an image for your product" %>
+  <%= f.input :photo_cache, as: :hidden %>
   <%= f.button :submit, "Update date" %>
   <%= link_to "Cancel", :back %>
 <% end %>

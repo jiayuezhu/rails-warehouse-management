@@ -216,7 +216,7 @@
             <div class="circle-tag"><div style="font-weight: bold; font-size: 16px"><%= Wholesale.where(product_id: product.id).last.present? ?  Wholesale.where(product_id: product.id).last.created_at.strftime("%d") : "Never" %></div><div style="font-weight: lighter; font-size: 12px;"><%= Wholesale.where(product_id: product.id).last.present? ?  Wholesale.where(product_id: product.id).last.created_at.strftime("%a") : "Sold" %></div></div>
           </div>
           <div id="stationary-tag" class="stationary-tag" ><div class="dec-tag"><div>Product</div></div><h2><%= product.name %></h2><p><%= product.brand %></p></div>
-          <div class="info"><p><%= image_tag "warehouse.svg", height: 24, width: 24, style: "padding-bottom: 6px" %> In stock: <%= product.storage %></p><p><%= image_tag "auction.svg", height: 24, width: 24, style: "padding-bottom: 6px" %> Wholesale sold: <%= product.wholesale_sold.present? ? product.wholesale_sold.present : 0 %></p></div>
+          <div class="info"><p><%= image_tag "warehouse.svg", height: 24, width: 24, style: "padding-bottom: 6px" %> In stock: <%= product.storage %></p><p><%= image_tag "auction.svg", height: 24, width: 24, style: "padding-bottom: 6px" %> Wholesale sold: <%= product.wholesale_sold.present? ? product.wholesale_sold : 0 %></p></div>
         </div>
       </div>
       <% end %>

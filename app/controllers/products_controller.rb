@@ -36,6 +36,7 @@
   def create
     @product = Product.new(set_product)
     @product.user = current_user
+    @product.photo.nil? ? @product.photo = "/assets/placeholder.jpg" : @product.photo = @product.photo
     authorize @product
     if @product.save
       redirect_to product_path(@product)
@@ -50,6 +51,7 @@
 
   def update
     @product = current_user.products.find(params[:id])
+    @product.photo.nil? ? @product.photo = "/assets/placeholder.jpg" : @product.photo = @product.photo
     authorize @product
     if @product.update(set_product)
       redirect_to products_path(@product)
